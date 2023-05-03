@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Basketball Product Order Form</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #032e18;
+      }
+      
+      form {
+        background-color: #af2727;
+        padding: 20px;
+        margin: 50px auto;
+        max-width: 500px;
+        box-shadow: 0px 0px 10px #3408b6;
+      }
+      
+      h1 {
+        text-align: center;
+      }
+      
+      label {
+        display: block;
+        margin-bottom: 10px;
+      }
+      
+      input[type="text"] {
+        border: none;
+        border-radius: 3px;
+        padding: 10px;
+        margin-bottom: 20px;
+        width: 100%;
+        box-sizing: border-box;
+        font-size: 16px;
+      }
+      
+      button[type="button"] {
+        background-color: #4CAF50;
+        color: #FFFFFF;
+        border: none;
+        border-radius: 3px;
+        padding: 10px;
+        font-size: 16px;
+        cursor: pointer;
+        margin-right: 10px;
+      }
+      
+      button[type="button"]:hover {
+        background-color: #1d118e;
+      }
+      
+      #order-summary {
+        background-color: #471898;
+        padding: 20px;
+        margin: 20px auto;
+        max-width: 500px;
+        box-shadow: 0px 0px 10px #0646a7;
+        text-align: center;
+        display: none;
+      }
+      
+      hr {
+        border: 0;
+        border-top: 1px solid #1986cf;
+        margin: 20px 0;
+      }
+      
+      h2 {
+        margin-top: 0;
+      }
+      
+      p {
+        margin: 10px 0;
+      }
+      
+      #order-total {
+        font-size: 24px;
+        font-weight: bold;
+      }
+      
+      .total-label {
+        font-size: 20px;
+        font-weight: bold;
+        margin-top: 10px;
+      }
+      
+      .price {
+        font-size: 20px;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Basketball Product Order Form</h1>
+    <form id="order-form">
+      <label for="item-quantity">Number of items:</label>
+      <button type="button" onclick="increment()">+</button>
+      <input type="text" id="item-quantity" name="item-quantity" value="0" readonly>
+      <button type="button" onclick="decrement()">-</button>
+      <br>
+      <label for="shipping-fee">Shipping and handling fee:</label>
+      <input type="text" id="shipping-fee" name="shipping-fee" value="$4.99" readonly>
+      <br>
+      <button type="button" onclick="calculate()">Calculate order</button>
+    </form>
+    <div id="order-summary">
+      <hr>
+      <h2>Order Summary</h2>
+      <p>Items(quantity):      &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span class="price" id="item-price">$0.00</span></p>
+      <p>Shipping and handling:   &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span class="price" id="shipping-price">$4.99</span></p>
+     
+      <p class="total-label">Total Before Tax:   &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="price" id="total-before-tax">$0.00</span></p>
+      <p class="total-label">Estimated tax(10%): &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; <span class="price" id="tax">$0.00</span></p>
+      <hr>
+      <p id="order-total" style="color:red">Order total: <span class="price" id="total">$0.00</span></p>
+    </div>
+    <script>
+      function increment() {
+        var itemQuantity = document.getElementById("item-quantity");
+        var quantity = parseInt(itemQuantity.value);
+        itemQuantity.value = quantity + 1;
+      }
+    
+      function decrement() {
+        var itemQuantity = document.getElementById("item-quantity");
+        var quantity = parseInt(itemQuantity.value);
+        if (quantity > 0) {
+          itemQuantity.value = quantity - 1;
+        }
+      }
+    
+      function calculate() {
+        var itemQuantity = parseInt(document.getElementById("item-quantity").value);
+        var itemPrice = itemQuantity * 1597; // 1597 cents = $15.97
+        var shippingPrice = 499; // 499 cents = $4.99
+        var totalBeforeTax = itemPrice + shippingPrice;
+        var tax = Math.round(totalBeforeTax * 0.1);
+        var total = totalBeforeTax + tax;
+        
+        document.getElementById("item-price").textContent = "$" + (itemPrice / 100).toFixed(2);
+        document.getElementById("total-before-tax").textContent = "$" + (totalBeforeTax / 100).toFixed(2);
+        document.getElementById("tax").textContent = "$" + (tax / 100).toFixed(2);
+        document.getElementById("total").textContent = "$" + (total / 100).toFixed(2);
+    
+        var orderSummary = document.getElementById("order-summary");
+        orderSummary.style.display = "block";
+      }
+    </script>
+
+</body>
+</html>
